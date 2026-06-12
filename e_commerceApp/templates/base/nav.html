@@ -1,0 +1,132 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+
+        <!-- Brand -->
+        <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
+             E-Commerce
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+            <!-- Left Menu -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        Home
+                    </a>
+                </li>
+
+                {% if request.user.is_authenticated %}
+
+                    {% if request.user.user_type == "Customer" %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customer_profile' %}">
+                                My Profile
+                            </a>
+                        </li>
+
+                        <!-- ✅ CUSTOMER ORDERS -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_orders' %}">
+                                My Orders
+                            </a>
+                        </li>
+
+                    {% elif request.user.user_type == "Admin" %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin_profile' %}">
+                                Admin Profile
+                            </a>
+                        </li>
+
+                        <!-- ✅ ADMIN VIEW CUSTOMER ORDERS -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'all_orders' %}">
+                                Customer Orders
+                            </a>
+                        </li>
+
+                        <!-- Dropdown -->
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle"
+                               href="#"
+                               role="button"
+                               data-bs-toggle="dropdown">
+                                Manage Shop
+                            </a>
+
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'add_category' %}">
+                                        Add Category
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'add_product' %}">
+                                        Add Product
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    {% endif %}
+
+                {% endif %}
+
+            </ul>
+
+            <!-- Search -->
+            <form class="d-flex me-3" method="GET" action="{% url 'dashboard' %}">
+                <input class="form-control me-2"
+                       type="search"
+                       name="search"
+                       placeholder="Search products">
+                <button class="btn btn-outline-light" type="submit">
+                    Search
+                </button>
+            </form>
+
+            <!-- Right Side -->
+            <div class="d-flex align-items-center">
+
+                {% if request.user.is_authenticated %}
+
+                    <span class="text-light me-3">
+                        Welcome, <strong>{{ request.user.username }}</strong>
+                    </span>
+
+                    <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
+                        Logout
+                    </a>
+
+                {% else %}
+
+                    <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-2">
+                        Login
+                    </a>
+
+                    <a href="{% url 'register' %}" class="btn btn-success btn-sm">
+                        Register
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+</nav>

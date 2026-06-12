@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+{% block body %}
+
+<div class="container py-5">
+
+    <div class="row bg-white p-4 rounded shadow-sm">
+
+        <!-- Product Image Section -->
+        <div class="col-lg-5">
+
+            <img src="{{ product.product_image.url }}"
+                 class="img-fluid border rounded mb-3"
+                 alt="Product">
+
+        </div>
+
+        <!-- Product Info Section -->
+        <div class="col-lg-7">
+
+            <div class="d-flex justify-content-between">
+
+                <h2 class="fw-normal">
+                    {{ product.description }}
+                </h2>
+
+                <div class="fs-4 text-secondary">
+                    <i class="bi bi-share"></i>
+                    <i class="bi bi-heart ms-2"></i>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <!-- Price -->
+            <div class="mb-4">
+
+                <h1 class="text-warning fw-normal">
+                    {{ product.price }}
+                </h1>
+
+                <div>
+                    <span class="text-decoration-line-through text-muted">
+                        {{ product.stock }}
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- BUY BUTTON (ONLY CUSTOMER) -->
+            {% if request.user.is_authenticated and request.user.user_type == "Customer" %}
+
+                <div class="d-flex gap-3">
+
+                    <a href="{% url 'product_order' product.id %}"
+                       class="btn btn-info text-white w-50 py-3 fs-5">
+                        Buy Now
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}

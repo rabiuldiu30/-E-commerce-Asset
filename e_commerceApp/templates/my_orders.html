@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+
+{% block body %}
+<div class="container py-5">
+
+    <h2>My Orders</h2>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Payment</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.product.product_name }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.order_status }}</td>
+                <td>{{ order.payment_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
